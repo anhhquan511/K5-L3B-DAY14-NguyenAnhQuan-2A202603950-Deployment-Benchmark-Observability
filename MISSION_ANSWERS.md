@@ -124,9 +124,14 @@ Content-Type: application/json
 
 ### Exercise 3.1 / 3.2: Deploy Agent Part 6 lên Cloud
 
-- **Nền tảng chính:** *(Đang chờ cập nhật sau khi deploy `06-lab-complete/` lên Railway/Render — xem chi tiết trong `DEPLOYMENT.md`)*
-- **Public URL:** *(Sẽ điền URL thực tế sau khi deploy ở CP6)*
-- **Screenshots:** `screenshots/dashboard.png`, `screenshots/running.png`, `screenshots/test.png`
+- **Nền tảng chính:** **Railway** (deploy thư mục `06-lab-complete/` kèm **Redis** database trên cùng project, dùng `railway.toml` + multi-stage `Dockerfile`, đặt đủ biến môi trường trên Railway Dashboard).
+- **Public URL:** https://k5-l3b-day14-nguyenanhquan-2a202603950-deploymen-production.up.railway.app (chi tiết xem [DEPLOYMENT.md](DEPLOYMENT.md))
+- **Kết quả tự kiểm 4 lệnh CP6 (không lộ key):**
+  - `GET /health` → **`200`** (`{"status":"ok","environment":"production"}`)
+  - `GET /ready` → **`200`** (`{"status":"ready","redis":"connected"}`)
+  - `POST /ask` (không có `X-API-Key`) → **`401`** (`{"detail":"Invalid or missing API key"}`)
+  - `POST /ask` (có `X-API-Key: $AGENT_API_KEY`) → **`200`** (`{"question":"Hello","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","user_id":null,"cost_usd":1.05e-05}`)
+- **Screenshots:** [dashboard.png](screenshots/dashboard.png), [running.png](screenshots/running.png), [test.png](screenshots/test.png)
 
 ### So sánh `railway.toml` vs `render.yaml`
 
